@@ -46,8 +46,11 @@ import utils as ut
 # Defaults
 # ============================
 CLF_LABEL_NAME = "Label"
-LOG_DIR = "logs/bootstrap"
-RESULT_DIR = "results/bootstrap"
+# Base directory for all outputs. Override with the PLM_DATA_DIR environment
+# variable (e.g. export PLM_DATA_DIR=/pl/active/rdi_data/fahsai/PLM).
+BASE_DIR = os.environ.get("PLM_DATA_DIR", "/scratch/alpine/hapa3524/PLM")
+LOG_DIR = os.path.join(BASE_DIR, "logs/bootstrap")
+RESULT_DIR = os.path.join(BASE_DIR, "results/bootstrap")
 # ============================
 
 def parse_args():

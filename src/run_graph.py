@@ -47,8 +47,11 @@ INPUT_CSV = "data/input_info_VRC01_IC80.csv"
 RESIDUE_INFO = "data/selected_residues_IC80.csv"
 ATTR_DIR = "results/attribution_maps/classification/"
 ATTN_DIR = "results/attention_maps/classification/full"
-RESULT_DIR = "results/graphs"
-LOG_DIR = "logs/graph"
+# Base directory for all outputs. Override with the PLM_DATA_DIR environment
+# variable (e.g. export PLM_DATA_DIR=/pl/active/rdi_data/fahsai/PLM).
+BASE_DIR = os.environ.get("PLM_DATA_DIR", "/scratch/alpine/hapa3524/PLM")
+RESULT_DIR = os.path.join(BASE_DIR, "results/graphs")
+LOG_DIR = os.path.join(BASE_DIR, "logs/graph")
 # =================================
 
 def parse_args():

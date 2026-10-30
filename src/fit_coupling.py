@@ -9,7 +9,9 @@ from sklearn.utils import resample
 from tqdm import tqdm
 warnings.filterwarnings("ignore")
 
-data_dir = "/pl/active/rdi_data/fahsai/PLM"
+# Base directory for all inputs/outputs. Override with the PLM_DATA_DIR environment
+# variable (e.g. export PLM_DATA_DIR=/pl/active/rdi_data/fahsai/PLM).
+data_dir = os.environ.get("PLM_DATA_DIR", "/scratch/alpine/hapa3524/PLM")
 
 AA_LIST = list("ACDEFGHIKLMNPQRSTVWYO-")
 N_AA = len(AA_LIST)

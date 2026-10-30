@@ -38,8 +38,11 @@ MODEL_NAME = "facebook/esm2_t33_650M_UR50D"
 CLF_LABEL_NAME = "Label"
 REG_LABEL_NAME = "pIC80"
 INPUT_CSV = "data/input.csv"
-RESULT_DIR = "results/attention_maps"
-LOG_DIR = "logs/attn"
+# Base directory for all outputs. Override with the PLM_DATA_DIR environment
+# variable (e.g. export PLM_DATA_DIR=/pl/active/rdi_data/fahsai/PLM).
+BASE_DIR = os.environ.get("PLM_DATA_DIR", "/scratch/alpine/hapa3524/PLM")
+RESULT_DIR = os.path.join(BASE_DIR, "results/attention_maps")
+LOG_DIR = os.path.join(BASE_DIR, "logs/attn")
 MAX_LEN = 512
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # =================================
