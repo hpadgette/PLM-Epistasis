@@ -25,7 +25,8 @@ module load openmpi/4.1.1
 
 # activate the appropriate conda environment
 module load anaconda
-conda activate mycustomenv 
+conda activate /projects/hapa3524/software/anaconda/envs/protML
+python -c "import torch; print(torch.cuda.is_available(), torch.cuda.get_device_name(0))"
 
 nvidia-smi
 
