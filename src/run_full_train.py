@@ -75,6 +75,7 @@ def parse_args():
     parser.add_argument("--result_dir", type=str, default=RESULT_DIR, help="Directory to save the final model and results.")
     parser.add_argument("--log_dir", type=str, default=LOG_DIR, help="Directory to save log files.")
     parser.add_argument("--output_model_name", type=str, default=None, help="Optional name for the saved model file (e.g., final_model.pt).")
+    parser.add_argument("--rep", type=int, default=None, help="Replicate index for ensemble runs. Appended to the summary CSV and log filenames so concurrent replicates do not overwrite each other.")
 
     # --- Final Training Hyperparameters ---
     parser.add_argument("--seed", type=int, default=42, help="Random seed.")
@@ -91,7 +92,10 @@ def parse_args():
 def main():
     """Main execution routine for training a final model and evaluating it."""
     args = parse_args()
-    logger = ut.setup_logging(args.log_dir, f"full_train_{args.task_type}")
+    log_tag = f"full_train_{args.task_type}"
+    if args.rep is not None:
+        log_tag += f"_rep_{args.rep}"
+    logger = ut.setup_logging(args.log_dir, log_tag)
 
     logger.info("=================================================")
     logger.info(f"   Starting Final PLM Training for {args.task_type.upper()}   ")
@@ -207,7 +211,10 @@ def main():
         "TrueLabel": labels,
         "Prediction": all_predictions
     })
-    summary_path = os.path.join(args.result_dir, "training_summary_results.csv")
+    summary_name = "training_summary_results"
+    if args.rep is not None:
+        summary_name += f"_rep_{args.rep}"
+    summary_path = os.path.join(args.result_dir, f"{summary_name}.csv")
     summary_df.to_csv(summary_path, index=False)
     logger.info(f"Training summary with predictions saved to: {summary_path}")
 
